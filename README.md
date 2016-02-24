@@ -10,15 +10,15 @@ L'application client est crée à partir des package Client + Common et l'applic
 
 ##### Définition des interfaces contenant les méthodes distantes : _Annuaire et _Chaîne
 
-Les interfaces <strong>doivent hériter de l'interface java.rmi.Remote<\strong>. Ces interfaces doivent contenir toutes les spécifications des méthodes qui seront susceptibles d'être appelées à distance.
+Les interfaces <strong>doivent hériter de l'interface java.rmi.Remote<strong>. Ces interfaces doivent contenir toutes les spécifications des méthodes qui seront susceptibles d'être appelées à distance.
 
-La communication entre le client et le serveur lors de l'invocation d'une méthode distante peut échouer pour diverses raisons (crash du serveur, rupture de la liaison, etc.) Ainsi <strong>chaque méthode appelée à distance doit déclarer qu'elle est en mesure de lever l'exception java.rmi.RemoteException<\strong>.
+La communication entre le client et le serveur lors de l'invocation d'une méthode distante peut échouer pour diverses raisons (crash du serveur, rupture de la liaison, etc.) Ainsi <strong>chaque méthode appelée à distance doit déclarer qu'elle est en mesure de lever l'exception java.rmi.RemoteException<strong>.
 
 ##### Implémentation de ces interfaces : Annuaire & Chaîne
 
-Ces classes correspondent à l'objet distant. Elles doivent donc <strong>implémenter l'interface définie et contenir le code nécessaire<\strong>.
+Ces classes correspondent à l'objet distant. Elles doivent donc <strong>implémenter l'interface définie et contenir le code nécessaire<strong>.
 
-Ces classes doivent obligatoirement <strong>hériter de la classe UnicastRemoteObject<\strong> qui contient les différents traitements élémentaires pour un objet distant dont l'appel par le stub du client est unique. 
+Ces classes doivent obligatoirement <strong>hériter de la classe UnicastRemoteObject<strong> qui contient les différents traitements élémentaires pour un objet distant dont l'appel par le stub du client est unique. 
 
 ###### Classe permettant d'instancier les objets et de les enregistrer dans un registre RMI : Server
 
@@ -33,13 +33,13 @@ La marche à suivre contient trois étapes :
 
 #### Côté client :
 
-Les opérations côté client sont effectuées dans la méthode main d'une classe dédiée <strong>LookForHotels</Strong>:
+Les opérations côté client sont effectuées dans la méthode main d'une classe dédiée <strong>LookForHotels<strong>:
 
 ##### - la mise en place d'un security manager (facultative)
  
 ##### - l'obtention d'une référence sur l'objet distant : 
  
-Pour obtenir une référence sur l'objet distant à partir de son nom, il faut utiliser la méthode statique <strong>lookup()<\strong> de la classe Naming. Cette méthode attend en paramètre une URL indiquant le nom qui référence l'objet distant (cette URL est composée de plusieurs éléments : le préfix rmi://, le nom du serveur (hostname) et le nom de l'objet tel qu'il a été enregistré dans le registre précédé d'un slash). Si le nom fourni dans l'URL n'est pas référencé dans le registre, la méthode lève l'exception NotBoundException.
+Pour obtenir une référence sur l'objet distant à partir de son nom, il faut utiliser la méthode statique <strong>lookup()<strong> de la classe Naming. Cette méthode attend en paramètre une URL indiquant le nom qui référence l'objet distant (cette URL est composée de plusieurs éléments : le préfix rmi://, le nom du serveur (hostname) et le nom de l'objet tel qu'il a été enregistré dans le registre précédé d'un slash). Si le nom fourni dans l'URL n'est pas référencé dans le registre, la méthode lève l'exception NotBoundException.
 
 Si l'on récupère au préalable le registre avec la méthode getRegistry() et que l'on appel la méthode lookup() sur ce registre, nous n'avons plus besoin de renseigner l'URL complète, il suffit de renseigner le nom de l'objet tel qu'il a été enregistré dans le registre en question
 
