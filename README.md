@@ -20,7 +20,7 @@ Ces classes correspondent à l'objet distant. Elles doivent donc implémenter l'
 
 Ces classes doivent obligatoirement hériter de la classe UnicastRemoteObject qui contient les différents traitements élémentaires pour un objet distant dont l'appel par le stub du client est unique. 
 
-###### Classe permettant d'instancier les objets et de les enregistrer dans un registre RMI : Server
+##### Classe permettant d'instancier les objets et de les enregistrer dans un registre RMI : Server
 
 Ces opérations peuvent être effectuées dans la méthode main d'une classe dédiée ou dans la méthode main de la classe de l'objet distant. Nous avons choisit de créer une classe Server dédié, afin de regrouper toutes ces opérations pour un ensemble d'objets distants.
 
