@@ -18,10 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-/**
- * Représente un client effectuant une requête lui permettant d'obtenir les numéros de téléphone des hôtels répondant à son critère de choix.
- */
-
+/** Représente un client effectuant une requête lui permettant d'obtenir les numéros de téléphone des hôtels répondant à son critère de choix.*/
 public class LookForHotel{
 
 	private int port = 1099;
@@ -37,23 +34,23 @@ public class LookForHotel{
 	
 	/**
 	 * Définition de l'objet représentant l'interrogation.
-	 * @param args les arguments n'en comportant qu'un seul qui indique le critère de localisation
+	 * @param critère de localisation, nombre de chaines d'hotels
 	 */
-	public LookForHotel(String... args){
+	public LookForHotel(String localisation){
 		
-		/* Recuperation de la localisation */
-		if(args.length != 1){
-			System.out.println("Arguments invalides : <localisation>");
-			System.exit(1);
-		}
-		this.localisation = args[0];
+		this.localisation = localisation;
+		
+		/* Mise en place d'un security manager : permet de charger dynamiquement certaines classes */
+		//if (System.getSecurityManager() == null) {
+		//	System.setSecurityManager(new SecurityManager());
+	    //}
 		
 		/* Recuperation des objets distants : Chaines & Annuaire */
 		
 		Registry registre;
 		
-		// Recuperation des chaînes
 		try {
+			// Recuperation des chaînes
 			for(int i=1; i<=nbChaines; i++){
 				registre = LocateRegistry.getRegistry(port+i);
 				listChaines.add((_Chaine) registre.lookup("chaine"+i));
@@ -62,8 +59,8 @@ public class LookForHotel{
 			e.printStackTrace();
 		}
 		
-		// Recuperation de l'annuaire
 		try {
+			// Recuperation de l'annuaire
 			registre = LocateRegistry.getRegistry(port+(nbChaines+1));
 			annuaire = (_Annuaire) registre.lookup("annuaire");
 		} catch (RemoteException | NotBoundException e) {
@@ -89,12 +86,13 @@ public class LookForHotel{
 				List<Hotel> lh = listChaines.get(i).get(localisation);
 				listHotels.addAll(lh);
 			}
-			System.out.println("Il y a " + listHotels.size() + " Hotels dans "+ localisation);
+			System.out.println("Il y a " + listHotels.size() + " Hotels dans "+ localisation +".");
 				
 			// Recherche des numéros de telephones pour chaque hotel de la liste
 			for (Hotel h : listHotels){
 				listNumeros.put(h.name, annuaire.get(h.name));
 			}
+			System.out.println("Nous avons trouvés " + listNumeros.size() + " numéros de téléphones pour les hotels dans "+ localisation +".");
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -103,6 +101,23 @@ public class LookForHotel{
 		long duration = System.currentTimeMillis() - begin;
 		return duration;
 		
+	}
+	
+	
+	/**
+	 * Lance la requête et calcul son temps d'exécution
+	 * @param <localisation(optionnel)> <nombre de chaine d'hotels(optionnel)>
+	 */
+	public static void main(String[] args) {
+		
+		if(args.length != 1){
+			System.out.println("Arguments attendus : <localisation>");
+			System.exit(1);
+		}
+		LookForHotel lfh= new LookForHotel(args[0]);
+		
+		long duration = lfh.call();
+		System.out.println("La requête à été exécutée en " + duration +" ms.\n");
 	}
 
 }

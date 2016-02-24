@@ -34,7 +34,7 @@ public class Chaine extends UnicastRemoteObject implements _Chaine {
 	 */	
 	protected Chaine(String path) throws RemoteException {	
 		
-		System.out.println(">Initialisation de la chaîne"+ path + "...\n");
+		System.out.println(">Initialisation de la chaine à partir du fichier "+ path + "...");
 		
 		/* Récupération des hôtels de la chaîne dans le fichier xml passé en 1er argument */
 		DocumentBuilder docBuilder = null;

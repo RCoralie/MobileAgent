@@ -33,7 +33,7 @@ public class Annuaire extends UnicastRemoteObject implements _Annuaire {
 	 */	
 	protected Annuaire(String path) throws RemoteException {	
 		
-		System.out.println(">>Initialisation de l'annuaire...\n");
+		System.out.println(">Initialisation de l'annuaire...");
 		
 		/* Récupération de l'annuaire dans le fichier xml */
 		DocumentBuilder docBuilder = null;
