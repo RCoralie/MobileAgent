@@ -11,6 +11,8 @@ package jus.aor.mobilagent.kernel;
  * @param <T> le type d'information délivrée par le service
  */
 public interface _Service<T> {
+	
+	
 	/**
 	 * Appel générique du service.
 	 * @param params les paramètres du services

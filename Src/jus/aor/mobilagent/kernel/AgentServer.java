@@ -1,4 +1,4 @@
-package bam.kernel;
+package jus.aor.mobilagent.kernel;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -86,7 +86,6 @@ public class AgentServer extends Thread { // Runnable ou Thread ????
 		}
 		return uri;	
 	}
-
 
 	
 }

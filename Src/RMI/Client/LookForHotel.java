@@ -2,12 +2,12 @@
  * J<i>ava</i> U<i>tilities</i> for S<i>tudents</i>
  */
 
-package RMI.Client;
+package rmi.client;
 
-import RMI.Common.Hotel;
-import RMI.Common.Numero;
-import RMI.Common._Annuaire;
-import RMI.Common._Chaine;
+import rmi.common.Hotel;
+import rmi.common.Numero;
+import rmi.common._Annuaire;
+import rmi.common._Chaine;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

@@ -1,4 +1,4 @@
-package RMI.Server;
+package rmi.server;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +15,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import RMI.Common.Numero;
-import RMI.Common._Annuaire;
+import rmi.common.Numero;
+import rmi.common._Annuaire;
 
 
 public class Annuaire extends UnicastRemoteObject implements _Annuaire {

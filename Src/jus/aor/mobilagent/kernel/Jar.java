@@ -16,14 +16,21 @@ import java.util.jar.JarException;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 
+
+
 /**
  * Liste l'ensemble des ressources contenues dans un fichier jar.
  * @author Morat 
  */
 public class Jar implements Iterable<Map.Entry<String,byte[]>>, Serializable{
+	
 	private static final long serialVersionUID = 1803791441059733817L;
+	
+	
 	/** le contenu du fichier jar */
 	private Map<String,byte[]> contents = new HashMap<String,byte[]>();
+
+	
 	/**
 	 * création d'un Jar. l'ensemble des ressources contenues
 	 * dans le fichier peuvent être accédées via les méthodes getResource ou getClass.
@@ -64,6 +71,8 @@ public class Jar implements Iterable<Map.Entry<String,byte[]>>, Serializable{
 			contents.put(entry.getName(), buffer);
 		}
 	}
+	
+	
 	/**
    * Restitue le contenu d'un composant du jar.
    * @param name le nom de la ressource.
@@ -74,16 +83,27 @@ public class Jar implements Iterable<Map.Entry<String,byte[]>>, Serializable{
 		if(result==null) result = contents.get(formatClassName(name));
 		return result;
 	}
+	
+	
 	/**
    * Restitue le contenu d'une classe du jar.
    * @param name le nom de la classe.
    * @return le contenu de la classe ou nul si la classe n'existe pas.
    */
-	public byte[] getClass(String name){ return getResource(formatClassName(name));}
+	public byte[] getClass(String name){ 
+		return getResource(formatClassName(name));
+	}
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Iterable#iterator()
 	 */
-	public Iterator<Map.Entry<String,byte[]>> iterator(){return contents.entrySet().iterator();}
+	public Iterator<Map.Entry<String,byte[]>> iterator(){
+		return contents.entrySet().iterator();}
+	
+	
+	
 	/**
 	 * @return itérable des classes du jar
 	 */
@@ -115,6 +135,9 @@ public class Jar implements Iterable<Map.Entry<String,byte[]>>, Serializable{
 			}
 		};
 	}
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -126,17 +149,25 @@ public class Jar implements Iterable<Map.Entry<String,byte[]>>, Serializable{
 		}
 		return "Jar[\n"+buf.toString()+"]";
 	}
+	
+	
 	/**
 	 * remplace le séparateur de package par le séparateur de niveau.
 	 * @param className le nom logique de la classe
 	 * @return le nom physique associé au nomp logique de la classe.
 	 */
-	protected String formatClassName(String className) { return className.replace(".","/")+".class";}
+	protected String formatClassName(String className) { 
+		return className.replace(".","/")+".class";
+	}
+
+	
 	/**
 	 * indique si le nom de la ressource est une classe (se termine par .class).
 	 * @param name le nom de la ressource
 	 * @return vrai si la ressource est une classe.
 	 */
-	protected boolean isClassName(String name) { return name.endsWith(".class");}
+	protected boolean isClassName(String name) { 
+		return name.endsWith(".class");
+	}
 }
 

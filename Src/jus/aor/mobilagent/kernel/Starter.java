@@ -1,6 +1,3 @@
-/**
- * J<i>ava</i> U<i>tilities</i> for S<i>tudents</i>
- */
 package jus.aor.mobilagent.kernel;
 
 import java.io.File;
@@ -25,26 +22,24 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-/**
- * @author Morat 
- */
+
+/** Permettant de configurer les caractéristiques d’un serveur via un fichier xml de description
+ 	> Parse le XML : 
+ 		> Crée un serveur
+ 		> Initialise les différents éléments du XML
+*/
+
 public class Starter{
-	/** le document xml en cours */
-	protected Document doc;
-	/** le logger pour ce code */
-	protected Logger logger;
-	/** le server associé à ce starter */
-	protected jus.aor.mobilagent.kernel._Server server;
-	/** le Loader utilisé */
-	protected BAMServerClassLoader loader;
-	/** la classe du server : jus.aor.mobilagent.kernel.Server */
-	protected Class<jus.aor.mobilagent.kernel.Server> classe;
-	/**
-	 * 
-	 * @param args
-	 */
+	
+	protected Document doc; /** le document xml en cours */
+	protected Logger logger; /** le logger pour ce code */
+	protected jus.aor.mobilagent.kernel._Server server; /** le server associé à ce starter */
+	protected BAMServerClassLoader loader; /** le Loader utilisé */
+	protected Class<jus.aor.mobilagent.kernel.Server> classe; /** la classe du server : bam.kernel.Server */
+	
+	
 	public Starter(String... args){
-		// récupération du niveau de log
+		/* récupération du niveau de log */
 		java.util.logging.Level level;
 		try {
 			level = Level.parse(System.getProperty("LEVEL"));			
@@ -55,7 +50,7 @@ public class Starter{
 		}
 		try {
 			/* Mise en place du logger pour tracer l'application */
-			String loggerName = "jus/aor/mobilagent/"+InetAddress.getLocalHost().getHostName()+"/"+args[1];
+			String loggerName = "jus.aor.mobilagent/"+InetAddress.getLocalHost().getHostName()+"/"+args[1];
 			logger = Logger.getLogger(loggerName);
 //			logger.setUseParentHandlers(false);
 			logger.addHandler(new IOHandler());
@@ -75,12 +70,20 @@ public class Starter{
 			return;
 		}
 	}
+	
+	/**
+	 * Crée le serveur avec son loader et sa classe
+	 * @param port
+	 * @param name
+	 */
 	@SuppressWarnings("unchecked")
 	protected void createServer(int port, String name) throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		loader = new BAMServerClassLoader(new URL[]{new URL("file:///.../MobilagentServer.jar")},this.getClass().getClassLoader());
-		classe = (Class<jus.aor.mobilagent.kernel.Server>)Class.forName("jus.aor.mobilagent.kernel.Server",true,loader);
+		classe = (Class<jus.aor.mobilagent.kernel.Server>)Class.forName("bam.kernel.Server",true,loader);
 		server = classe.getConstructor(int.class,String.class).newInstance(port,name);
 	}
+	
+	
 	/**
 	 * Ajoute les services définis dans le fichier de configuration
 	 */
@@ -97,6 +100,8 @@ public class Starter{
 			addService(name, classeName, codeBase, args);
 		}
 	}
+	
+	
 	/**
 	 * Ajoute un service
 	 * @param name le nom du service
@@ -111,6 +116,8 @@ public class Starter{
 			logger.log(Level.FINE," erreur durant l'ajout d'un service",e);
 		}
 	}
+	
+	
 	/**
 	 * déploiement les agents définis dans le fichier de configuration
 	 */
@@ -134,6 +141,8 @@ public class Starter{
 			deployAgent(classeName, args, codeBase,serverAddress, serverAction);
 		}
 	}
+	
+	
 	/**
 	 * Déploie un agent
 	 * @param classeName la classe de l'agent
@@ -149,6 +158,8 @@ public class Starter{
 			logger.log(Level.FINE," erreur durant le déploiement de l'agent",e);
 		}
 	}
+	
+	
 	private static Iterable<Node> iterable(final Node racine, final String element){
 		return new Iterable<Node>() {
 			@Override
@@ -174,13 +185,14 @@ public class Starter{
 			}
 		};
 	}
+	
+	
 	/**
 	 * Application starter
 	 * @param args
 	 */
 	public static void main(String... args) {
-		if(System.getSecurityManager() == null)System.setSecurityManager(new RMISecurityManager());
+		//if(System.getSecurityManager() == null)System.setSecurityManager(new RMISecurityManager());
 		new Starter(args);
 	}
 }
-

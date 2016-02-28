@@ -1,4 +1,4 @@
-package bam.kernel;
+package jus.aor.mobilagent.kernel;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -94,5 +94,11 @@ public class Agent implements _Agent{
 		}
 	}
 		
+	
+	/** Utilisé par Hello pour récupérer le nom du serveur sur lequel l'agent passe*/
+	public String getServerName() {
+		return this.serverName;
+	}
+	
 	
 }

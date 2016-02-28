@@ -1,4 +1,4 @@
-package bam.kernel;
+package jus.aor.mobilagent.kernel;
 
 import java.io.IOException;
 import java.net.URL;

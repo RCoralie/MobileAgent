@@ -10,10 +10,14 @@ import java.io.Serializable;
  * @author  Morat
  */
 public interface _Action extends Serializable{
+	
 	/** l'action vide */
-	public static final _Action NIHIL = 		/*A COMPLETER*/; 
-	/**
-	 * Exécute l'action
-	 */
-	public void execute();
+	public static final _Action NIHIL = new _Action(){
+		private static final long serialVersionUID = 1L;
+		public void execute(){	
+			System.out.println("Action vide");
+		}
+	};
+
+	void execute();
 }

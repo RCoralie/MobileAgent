@@ -1,7 +1,7 @@
-package RMI.Server;
+package rmi.server;
 
-import RMI.Common.Hotel;
-import RMI.Common._Chaine;
+import rmi.common.Hotel;
+import rmi.common._Chaine;
 
 import java.io.File;
 import java.io.IOException;
