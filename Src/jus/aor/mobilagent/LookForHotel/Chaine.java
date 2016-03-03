@@ -99,6 +99,7 @@ public class Chaine implements _Service {
 				hotels.add(element);
 			}
 		} 
+		System.out.println("Il y a " + hotels.size() + " Hotels dans "+ localisation +".");
 		return hotels;
 	}		
 

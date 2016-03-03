@@ -85,6 +85,7 @@ public class Annuaire implements _Annuaire, _Service {
 		for(Hotel h : hotels){
 			nums.put(h.name, annuaire.get(h.name));
 		}		
+		System.out.println("Nous avons trouvés " + nums.size() + " numéros de téléphones.");
 		return nums;
 	}
 

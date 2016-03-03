@@ -14,10 +14,13 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 import jus.aor.mobilagent.kernel.Agent;
+import jus.aor.mobilagent.kernel._Action;
+import jus.aor.mobilagent.kernel._Service;
 
 
 /** Représente un client effectuant une requête lui permettant d'obtenir les numéros de téléphone des hôtels répondant à son critère de choix.*/
@@ -96,7 +99,7 @@ public class LookForHotel extends Agent{
 			for (Hotel h : listHotels){
 				listNumeros.put(h.name, annuaire.get(h.name));
 			}
-			System.out.println("Nous avons trouvés " + listNumeros.size() + " numéros de téléphones pour les hotels dans "+ localisation +".");
+			
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -123,5 +126,35 @@ public class LookForHotel extends Agent{
 		long duration = lfh.call();
 		System.out.println("La requête à été exécutée en " + duration +" ms.\n");
 	}
+	
+	
+	
+	
+	/** Service : Recherche des numéros dans l'annuaire
+	 * 
+	 */
+	protected _Action findTelephone = new _Action(){
+		private static final long serialVersionUID = 1L;
+		public void execute() {
+			System.out.println("Recherche dans l'annuaire...");
+			_Service<?> service = server.getService("Telephones");
+			listNumeros = (HashMap<String, Numero>) service.call(listHotels);
+		}
+	};
+	
+	/** Service : recherche des hotels correspondant à la localisation
+	 * 
+	 */
+	protected _Action findHotel = new _Action(){
+		private static final long serialVersionUID = 1L;
+		public void execute() {
+			System.out.println("Recherche des hotels...");
+			_Service<?> service = server.getService("Hotels");
+			listHotels = (List<Hotel>) service.call(localisation);
+
+		}
+		
+	};
+	
 
 }
