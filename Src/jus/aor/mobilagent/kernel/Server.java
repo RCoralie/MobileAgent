@@ -90,13 +90,13 @@ public final class Server implements _Server {
 			// **TODO** : 
 			// On récupère le ServerClassLoader de Server et on ajoute le codeBase de l'agent dedans
 			BAMAgentClassLoader agentClass = new BAMAgentClassLoader(new URL[]{},this.getClass().getClassLoader());
-			agentClass.addURL(new URL(codeBase));
+			agentClass.addURL(codeBase);
 			// On récupère la classe de l'agent dans le ServerClassLoader
 			Class<_Agent> agentClasse = (Class<_Agent>)Class.forName(classeName,true,agentClass);
 			// On récupère le constructeur de l'agent dans sa classe et on créer ainsi un nouvel agent
 			_Agent agent = (_Agent) agentClasse.getConstructor(Object[].class).newInstance(new Object[]{args});
 			// On initialise l'agent sur ce serveur de départ
-			agent.init(this.agentServer, this.name);
+			agent.init(agentClass, this.agentServer, this.name);
 			// Remplissage de la feuille de route de l'agent
 			for (int i=0; i<etapeAction.size(); i++){
 				// on récupère l'action de l'étape i

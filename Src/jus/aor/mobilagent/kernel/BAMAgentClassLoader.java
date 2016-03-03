@@ -40,13 +40,23 @@ public class BAMAgentClassLoader extends ClassLoader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.myjar = jar;
-		// Parcours de l'objet Iterable Jar (Jar implements Iterable<Map.Entry<String,byte[]>>)
-		for(Map.Entry<String, byte[]> elem : myjar.classIterator()){ 
-			// Ajoute les éléments du Jar dans notre HashMap de class (Les éléments du Jar sont contenu dans une HashMap)
-			MapClass.put(elem.getKey(), elem.getValue());
-		}
+		addClass(jar);
 	}
+
+
+	public void addURL(String codeBase) {
+		// Creation d'un objet Jar à partir du string
+		Jar jar = null;
+		try {
+			jar = new Jar(codeBase);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		addClass(jar);
+		
+	}
+	
+	
 		
 }
 	

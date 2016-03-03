@@ -14,7 +14,7 @@ public interface _Agent extends java.io.Serializable, Runnable {
 	 * @param agentServer le serveur hébergeant initialement l'agent.
 	 * @param serverName le nom logique du serveur d'agent
 	 */
-	public void init(AgentServer agentServer, String serverName);
+	public void init(BAMAgentClassLoader bamAgent, AgentServer agentServer, String serverName);
 	
 	
 	/**

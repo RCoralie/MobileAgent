@@ -19,7 +19,7 @@ public class AgentServer extends Thread { // Runnable ou Thread ????
 	static ServerSocket ListenServer; // socket utilisé pour écouter et accepter les connexions des clients
 	private String serverName;
 	private HashMap<String,_Service<?>> serviceMap;
-	private boolean alive;
+	private boolean alive = true;
 	
 	
 	public AgentServer(int port, String name){
@@ -48,6 +48,7 @@ public class AgentServer extends Thread { // Runnable ou Thread ????
 				bamAgent.addClass(jar);
 				// On récupère l'agent mobile et on le réinitialise sur ce serveur
 				_Agent agent = (_Agent) ois.readObject();
+				System.out.println("Run agentServer");
 				agent.reInit(bamAgent, this, this.serverName);
 				// On execute l'agent comme un nouveau thread
 				Thread t = new Thread(agent);

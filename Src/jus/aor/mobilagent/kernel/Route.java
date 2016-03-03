@@ -35,6 +35,9 @@ class Route implements Iterable<Etape>, Serializable{
 		route = new LinkedList<Etape>();
 		this.retour = retour;
 		hasNext=true;
+		route.add(route.size(),retour);
+		System.out.println("Construction de la feuille de route");
+		System.out.println("Taille de la feuille de route : " + route.size());
 	}
 	
 	
@@ -44,6 +47,8 @@ class Route implements Iterable<Etape>, Serializable{
 	 */
 	public void add(Etape e) { 
 		route.add(route.size(),e);
+		System.out.println("Ajout d'une étape :  " + e.getEtape());
+		System.out.println("Taille de la feuille de route : " + route.size());
 	}
 
 	
@@ -68,7 +73,7 @@ class Route implements Iterable<Etape>, Serializable{
 	 */
 	Etape next() throws NoSuchElementException {
 		// A COMPLETER
-		Etape next = this.get(); // on recupère le premier élément de la liste (= prochaine étape)
+		Etape next = route.get(0); // on recupère le premier élément de la liste (= prochaine étape)
 		route.remove(0); // on supprime le premier élément de la liste (puisque l'on va effetuer l'étape)
 		if(route.size()==0){
 			hasNext = false;

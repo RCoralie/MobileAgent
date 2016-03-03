@@ -37,4 +37,8 @@ public class Etape implements Serializable{
 	public String toString() {
 		return server+"("+action+")";
 	}
+	
+	public URI getEtape(){
+		return server;
+	}
 }
