@@ -148,7 +148,7 @@ public final class Server implements _Server {
 			// Envoi du jar au serveur par serialization
 			oos.writeObject(myjar);
 			// Envoie de l'agent au serveur par serialization
-			oos.writeObject(this);
+			oos.writeObject(agent);
 			// Fermeture
 			os.close();
 			oos.close();
