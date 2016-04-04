@@ -3,11 +3,16 @@
  */
 package jus.aor.mobilagent.kernel;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -123,7 +128,29 @@ public final class Server implements _Server {
 	 */
 	protected void startAgent(_Agent agent, BAMAgentClassLoader loader) throws Exception {
 		// **TODO**
-		Thread t = new Thread(agent);
-		t.start();
+		/*Thread t = new Thread(agent);
+		t.start();*/
+		try {
+			System.out.println("Move initial");
+			// Creation du socket agent
+			Socket ConnectServer;
+			ConnectServer = new Socket(this.agentServer.site().getHost(),this.port);
+			// Recupération du Jar qui doit transiter avec l'agent
+			Jar myjar = loader.getJar();
+			// Preparation de l'envoie
+			OutputStream os = ConnectServer.getOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(os);
+			// Envoi du jar au serveur par serialization
+			oos.writeObject(myjar);
+			// Envoie de l'agent au serveur par serialization
+			oos.writeObject(this);
+			// Fermeture
+			os.close();
+			oos.close();
+			ConnectServer.close();
+			System.out.println("Fin move initial");
+		} catch (NoSuchElementException | IOException e) {
+			System.out.println("Le serveur n'est pas joignable, on passe au suivant \n");
+		}
 	}
 }

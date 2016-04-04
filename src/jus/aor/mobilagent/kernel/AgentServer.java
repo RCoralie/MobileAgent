@@ -88,5 +88,8 @@ public class AgentServer extends Thread { // Runnable ou Thread ????
 		return uri;	
 	}
 
+	/*public String getHost(){
+		return this.serverName.
+	}*/
 	
 }
