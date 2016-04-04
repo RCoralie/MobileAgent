@@ -37,21 +37,19 @@ public class Hello extends Agent{
 			Date date = new Date();
 	        DateFormat dt = new SimpleDateFormat("hh:mm:ss:SSS");
 			helloList.add(getServerName()+ " : " +dt.format(date) + "\n");
+			System.out.println("Hello!");
 		}
 	};
-
-	
-	/* (non-Javadoc)
-	 * @see jus.aor.mobilagent.kernel.Agent#retour()
+	 
+	 /**
+	 * Action à entreprendre sur le serveur de retour
 	 */
-	protected _Action retour = new _Action() {
+	protected _Action retour = new _Action(){
 		private static final long serialVersionUID = 1L;
 		public void execute() {
-			System.out.println("Hello : [ \n ");
-			for(int i=0; i<helloList.size(); i++){
-				System.out.println(helloList.get(i));
+			for(String temp : helloList){
+				System.out.println(temp);
 			}
-			System.out.println("]\n");
-		}
+		}			
 	};
 }

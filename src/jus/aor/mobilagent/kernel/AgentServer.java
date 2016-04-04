@@ -41,20 +41,23 @@ public class AgentServer extends Thread { // Runnable ou Thread ????
 				System.out.println("L'agent mobile" + ConnectClient.getInetAddress() + " est connecté.\n");
 				// On prépare le lecture
 				InputStream is = ConnectClient.getInputStream();
-				ObjectInputStream ois = new ObjectInputStream(is);
-				// On récupère le Jar et crée un BAMAgentClassLoader
-				Jar jar = (Jar) ois.readObject();
+				
 				BAMAgentClassLoader bamAgent = new BAMAgentClassLoader(new URL[]{}, this.getClass().getClassLoader());
+				AgentInputStream aois = new AgentInputStream(is,bamAgent);
+				
+				// On récupère le Jar et crée un BAMAgentClassLoader
+				Jar jar = (Jar) aois.readObject();
 				bamAgent.addClass(jar);
+				
 				// On récupère l'agent mobile et on le réinitialise sur ce serveur
-				_Agent agent = (_Agent) ois.readObject();
+				_Agent agent = (_Agent) aois.readObject();
 				System.out.println("Run agentServer");
 				agent.reInit(bamAgent, this, this.serverName);
 				// On execute l'agent comme un nouveau thread
 				Thread t = new Thread(agent);
 				t.start();
 				// Fermeture
-				ois.close();
+				aois.close();
 				ConnectClient.close();
 			}
 			ListenServer.close();

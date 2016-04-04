@@ -14,10 +14,13 @@ public class Agent implements _Agent{
 
 	private static final long serialVersionUID = 1L;
 	
-	private transient AgentServer server;
+	public transient AgentServer server;
 	private transient String serverName;
 	private Route route;
+	private URI firstServer;
 	private transient BAMAgentClassLoader bamAgent;
+	// Pour l'OBJ4
+	protected long debut;
 	
 
 	@Override
@@ -28,6 +31,15 @@ public class Agent implements _Agent{
 		this.server = agentServer;
 		this.serverName = serverName;
 		this.bamAgent = bamAgent;
+		
+		try {
+			this.firstServer = new URI(serverName);
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//Obj4
+		debut = System.currentTimeMillis();
 		// Construction d'une feuille de route pour l'agent
 		try {
 			route = new Route(new Etape(new URI(serverName),_Action.NIHIL));
@@ -102,6 +114,22 @@ public class Agent implements _Agent{
 	public String getServerName() {
 		return this.serverName;
 	}
+	
+	public URI getFirstServer() {
+		return this.firstServer;
+	}
+	
+	public Route getRoute(){
+		return this.route;
+	}
+	
+	
+	public _Action retour = new _Action() {
+		private static final long serialVersionUID = 1L;
+		public void execute() {
+			System.out.println("End!");
+		}
+	};
 	
 	
 }
