@@ -3,14 +3,20 @@
  */
 package jus.aor.mobilagent.kernel;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jdk.nashorn.internal.ir.CatchNode;
 import jus.aor.mobilagent.kernel.BAMAgentClassLoader;
 import jus.aor.mobilagent.kernel._Agent;
 
@@ -98,13 +104,17 @@ public final class Server implements _Server {
 			// On initialise l'agent sur ce serveur de départ
 			agent.init(agentClass, this.agentServer, this.name);
 			// Remplissage de la feuille de route de l'agent
+			etapeAction.add(etapeAction.size(), "retour");
+			etapeAddress.add(etapeAddress.size(), etapeAddress.get(0)); /*TODO : On ne part pas du premier server !!!*/
+			System.out.println("Nombre d'étapes " + etapeAddress.size());
 			for (int i=0; i<etapeAction.size(); i++){
 				// on récupère l'action de l'étape i
 				Field field = agentClasse.getDeclaredField(etapeAction.get(i));
 				field.setAccessible(true);
 				_Action action = (_Action) field.get(agent);
 				// on ajoute l'étape (serveur + action à éxecuter sur le serveur)
-				agent.addEtape(new Etape(new URI(etapeAddress.get(i)),action ));	
+				agent.addEtape(new Etape(new URI(etapeAddress.get(i)),action ));
+				System.out.println("Ajout de l'étape " + etapeAction.get(i) + " sur " + etapeAddress.get(i) + " -- OK");
 			}
 			startAgent(agent, agentClass);
 		}catch(Exception ex){
@@ -123,7 +133,10 @@ public final class Server implements _Server {
 	 */
 	protected void startAgent(_Agent agent, BAMAgentClassLoader loader) throws Exception {
 		// **TODO**
-		Thread t = new Thread(agent);
-		t.start();
+		//Thread t = new Thread(agent);
+		//t.start();
+		agent.run();
+
+		
 	}
 }

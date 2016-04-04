@@ -25,7 +25,7 @@ public class BAMAgentClassLoader extends ClassLoader {
 	public void addClass(Jar jar) {
 		this.myjar = jar;
 		// Parcours de l'objet Iterable Jar (Jar implements Iterable<Map.Entry<String,byte[]>>)
-		for(HashMap.Entry<String, byte[]> elem : myjar.classIterator()){ 
+		for(HashMap.Entry<String, byte[]> elem : myjar){ 
 			// Ajoute les éléments du Jar dans notre HashMap de class (Les éléments du Jar sont contenu dans une HashMap)
 			MapClass.put(elem.getKey(), elem.getValue());
 		}

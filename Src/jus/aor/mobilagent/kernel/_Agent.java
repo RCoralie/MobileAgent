@@ -1,5 +1,6 @@
 package jus.aor.mobilagent.kernel;
 
+import java.net.URI;
 import java.net.UnknownHostException;
 
 /**
@@ -33,4 +34,9 @@ public interface _Agent extends java.io.Serializable, Runnable {
 	public void addEtape(Etape etape);
 
 
+	public Route getRoute();
+
+
+	public URI getFirstServer();
+	
 }

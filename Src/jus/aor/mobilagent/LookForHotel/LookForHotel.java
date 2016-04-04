@@ -79,35 +79,16 @@ public class LookForHotel extends Agent{
 	
 	/**
 	 * Réalise une intérrogation
+	 * @return 
 	 * @return la durée de l'interrogation
 	 * @throws RemoteException
 	 */
 	public long call() {
-		
 		// Initialisation du temps
 		long begin = System.currentTimeMillis();
-		
-		try {
-			// Recuperation de tous les hotels correspondant à la localisation (de toutes les chaines)
-			for(int i=0; i<listChaines.size(); i++){
-				List<Hotel> lh = listChaines.get(i).get(localisation);
-				listHotels.addAll(lh);
-			}
-			System.out.println("Il y a " + listHotels.size() + " Hotels dans "+ localisation +".");
-				
-			// Recherche des numéros de telephones pour chaque hotel de la liste
-			for (Hotel h : listHotels){
-				listNumeros.put(h.name, annuaire.get(h.name));
-			}
-			
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		
 		// Calcul de la durée de traitement
 		long duration = System.currentTimeMillis() - begin;
 		return duration;
-		
 	}
 	
 	
