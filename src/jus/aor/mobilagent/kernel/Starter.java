@@ -113,7 +113,7 @@ public class Starter{
 		try{
 			server.addService(name,classeName,codeBase,args);
 		}catch(Exception e){
-			logger.log(Level.FINE," erreur durant l'ajout d'un service",e);
+			logger.log(Level.FINE," Erreur durant l'ajout d'un service",e);
 		}
 	}
 	
@@ -155,7 +155,7 @@ public class Starter{
 		try{
 			server.deployAgent(classeName,args,codeBase,serverAddress,serverAction);
 		}catch(Exception e){
-			logger.log(Level.FINE," erreur durant le déploiement de l'agent",e);
+			logger.log(Level.FINE," Erreur durant le déploiement de l'agent",e);
 		}
 	}
 	

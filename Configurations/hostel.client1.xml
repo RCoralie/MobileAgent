@@ -4,8 +4,7 @@
 	<port value="1111"/>
 	<agent class="jus.aor.mobilagent.LookForHotel.LookForHotel" codebase="jars/LookForHotel.jar" args="Paris">
 		<etape server="mobilagent://localhost:2222/" action="findNumbers" />
-		<etape server="mobilagent://localhost:3333/" action="findNumbers" />
+		<etape server="mobilagent://localhost:3333/" action="findHotels" />
 		<etape server="mobilagent://localhost:2222/" action="findNumbers" />
-		<etape server="mobilagent://localhost:1111/" action="retour" />
 	</agent>
 </server>

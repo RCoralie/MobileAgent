@@ -35,17 +35,13 @@ public class Agent implements _Agent{
 		try {
 			this.firstServer = new URI(serverName);
 		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		//Obj4
 		debut = System.currentTimeMillis();
 		// Construction d'une feuille de route pour l'agent
 		try {
-			//route = new Route(new Etape(new URI(serverName),_Action.NIHIL));
-			route = new Route(new Etape(new URI("mobilagent://localhost:1111/"),_Action.NIHIL));
-			//this.route.add(new Etape(new URI("mobilagent://localhost:1111/"),_Action.NIHIL));
-			System.out.println("YOLO ROUTE init : " + route.toString());
+			route = new Route(new Etape(this.server.site(),_Action.NIHIL));
 		} //catch (URISyntaxException e) 
 		catch (Exception e){
 			e.printStackTrace();

@@ -47,7 +47,7 @@ public class Hello extends Agent{
 	protected _Action retour = new _Action(){
 		private static final long serialVersionUID = 1L;
 		public void execute() {
-			System.out.println("VOILA CE QUE J'AI TROUVE : ");
+			System.out.println("Voila mes temps de voyage : ");
 			for(String temp : helloList){
 				System.out.println(temp);
 			}

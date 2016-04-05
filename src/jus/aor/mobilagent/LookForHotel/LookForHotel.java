@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import jus.aor.mobilagent.kernel.Agent;
@@ -19,8 +21,10 @@ public class LookForHotel extends Agent {
 	private static final long serialVersionUID = 1L;
 
 	private String localisation;
-	private Collection<Hotel> hotels = new LinkedList<Hotel>();
-	private Map<Hotel, Numero> numbers = new HashMap<Hotel, Numero>();
+	private _Annuaire annuaire;
+	private List<_Chaine> listChaines = new ArrayList<_Chaine>();
+	private List<Hotel> listHotels = new ArrayList<Hotel>();
+	private HashMap<Hotel, Numero> listNumeros = new HashMap<Hotel, Numero>();
 
 	protected _Action findHotels = new _Action() {
 		private static final long serialVersionUID = 1L;
@@ -33,7 +37,7 @@ public class LookForHotel extends Agent {
 			@SuppressWarnings("unchecked")
 			//Collection<Hotel> _hotel = (Collection<Hotel>) _service.call(new Object[] { LookForHotel.this.localisation });
 			Collection<Hotel> _hotel = (Collection<Hotel>) _service.call(localisation);
-			LookForHotel.this.hotels.addAll(_hotel);
+			LookForHotel.this.listHotels.addAll(_hotel);
 			//Starter.getLogger().log(Level.INFO, _hotel.size() + " hotels found in " + LookForHotel.this.localisation);
 		}
 	};
@@ -45,17 +49,17 @@ public class LookForHotel extends Agent {
 		public void execute() {
 			//Starter.getLogger().log(Level.INFO, "Searching for hotels' number");
 			_Service<?> _service = LookForHotel.this.server.getService("Numbers");
-			for (Hotel h : LookForHotel.this.hotels) {
+			for (Hotel h : LookForHotel.this.listHotels) {
 				Numero num = (Numero) _service.call(new Object[] { h.name });
-				LookForHotel.this.numbers.put(h, num);
+				LookForHotel.this.listNumeros.put(h, num);
 			}
 		}
 	};
 
 	public LookForHotel(Object... args) {
 		this.localisation = (String) args[0];
-		this.hotels = new ArrayList<>();
-		this.numbers = new HashMap<>();
+		this.listHotels = new ArrayList<>();
+		this.listNumeros = new HashMap<>();
 	}
 
 }

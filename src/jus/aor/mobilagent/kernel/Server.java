@@ -52,7 +52,7 @@ public final class Server implements _Server {
 			Thread.sleep(1000); //temporisation de mise en place du server d'agents
 			agentServer.start(); //lancement du serveur
 		}catch(Exception ex){
-			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
+			logger.log(Level.FINE," Erreur durant le lancement du serveur"+this,ex);
 			return;
 		}
 	}
@@ -67,7 +67,6 @@ public final class Server implements _Server {
 	 */
 	public final void addService(String name, String classeName, String codeBase, Object... args) {
 		try {
-			// **TODO** : 
 			// On récupère le ServerClassLoader de Server et on ajoute le codeBase du service dedans
 			BAMServerClassLoader serverClass = new BAMServerClassLoader(new URL[]{},this.getClass().getClassLoader());
 			serverClass.addURL(new URL(codeBase));
@@ -77,10 +76,10 @@ public final class Server implements _Server {
 			_Service<?> service = (_Service<?>) serviceClasse.getConstructor(Object[].class).newInstance(new Object[]{args});
 			// On ajoute le service dans l'agentServer (serveur qui accepte et traite les agents mobiles)
 			agentServer.addService(name, service);
-			serverClass.close();
+			//serverClass.close();
 				
 		}catch(Exception ex){
-			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
+			logger.log(Level.FINE," Erreur durant le lancement du serveur"+this,ex);
 			return;
 		}
 	}
@@ -115,10 +114,9 @@ public final class Server implements _Server {
 				agent.addEtape(new Etape(new URI(etapeAddress.get(i)),action ));
 				System.out.println("Ajout de l'étape " + etapeAction.get(i) + " sur " + etapeAddress.get(i) + " -- OK");
 			}
-			System.out.println("YOLO route " + agent.getRoute().toString());
 			startAgent(agent, agentClass);
 		}catch(Exception ex){
-			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
+			logger.log(Level.FINE," Erreur durant le lancement du serveur"+this,ex);
 			return;
 		}
 	}
