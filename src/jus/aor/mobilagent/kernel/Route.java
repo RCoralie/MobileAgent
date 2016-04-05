@@ -57,12 +57,14 @@ class Route implements Iterable<Etape>, Serializable{
 	 * @return la prochaine étape.
 	 */
 	Etape get() throws NoSuchElementException {
-		//A COMPLETER :
-		if(hasNext()) { // si il y a des éléments dans la liste on retourne le premier (= prochaine étape)
-			return route.get(0);
-		}
-		else{ // s'il n'y a plus d'élément dans la liste, on retourne retour (= dernière étape)
-			return retour;
+		if (this.hasNext()){
+			if (this.route.size() > 0){
+				return this.route.get(0);
+			}else {
+				return this.retour;
+			}
+		} else {
+			throw new NoSuchElementException();
 		}
 	}
 
@@ -73,12 +75,27 @@ class Route implements Iterable<Etape>, Serializable{
 	 */
 	Etape next() throws NoSuchElementException {
 		// A COMPLETER
-		Etape next = route.get(0); // on recupère le premier élément de la liste (= prochaine étape)
+		/*Etape next = route.get(0); // on recupère le premier élément de la liste (= prochaine étape)
 		route.remove(0); // on supprime le premier élément de la liste (puisque l'on va effetuer l'étape)
 		if(route.size()==0){
 			hasNext = false;
 		}
-		return next;
+		return next;*/
+		
+		Etape tmpStep;
+		if (this.hasNext()){
+			if(this.route.size() > 0){
+				tmpStep = this.route.get(0);
+				this.route.remove(0);
+			}else {
+				tmpStep = this.retour;
+				this.hasNext = false;
+			}
+		} else {
+			throw new NoSuchElementException();
+		}
+		
+		return tmpStep;
 	}
 	
 	

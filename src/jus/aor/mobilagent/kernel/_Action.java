@@ -15,7 +15,7 @@ public interface _Action extends Serializable{
 	public static final _Action NIHIL = new _Action(){
 		private static final long serialVersionUID = 1L;
 		public void execute(){	
-			System.out.println("Action vide");
+			System.out.println("Action VIDE");
 		}
 	};
 

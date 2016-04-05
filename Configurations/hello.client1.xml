@@ -6,7 +6,8 @@
 		<etape server="mobilagent://localhost:2222/" action="doIt" />
 		<etape server="mobilagent://localhost:3333/" action="doIt" ></etape>
 		<etape server="mobilagent://localhost:2222/" action="doIt" />
-		<etape server="mobilagent://localhost:3333/" action="doIt" ></etape>
+		<etape server="mobilagent://localhost:3333/" action="doIt" />
+		<etape server="mobilagent://localhost:1111/" action="retour"></etape>
 	</agent>
 </server>
 
