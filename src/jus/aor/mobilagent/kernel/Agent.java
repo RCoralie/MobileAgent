@@ -43,6 +43,7 @@ public class Agent implements _Agent{
 		// Construction d'une feuille de route pour l'agent
 		try {
 			route = new Route(new Etape(new URI(serverName),_Action.NIHIL));
+			System.out.println("YOLO ROUTE Agent : " + route.toString());
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}

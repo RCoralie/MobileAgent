@@ -105,7 +105,7 @@ public final class Server implements _Server {
 			agent.init(agentClass, this.agentServer, this.name);
 			// Remplissage de la feuille de route de l'agent
 			etapeAction.add(etapeAction.size(), "retour");
-			etapeAddress.add(etapeAddress.size(), etapeAddress.get(0)); /*TODO : On ne part pas du premier server !!!*/
+			etapeAddress.add(etapeAddress.size(),"mobilagent://localhost:" + this.port+"/"); /*TODO : On ne part pas du premier server !!! etapeAddress.get(0)*/
 			System.out.println("Nombre d'étapes " + etapeAddress.size());
 			for (int i=0; i<etapeAction.size(); i++){
 				// on récupère l'action de l'étape i
@@ -116,6 +116,7 @@ public final class Server implements _Server {
 				agent.addEtape(new Etape(new URI(etapeAddress.get(i)),action ));
 				System.out.println("Ajout de l'étape " + etapeAction.get(i) + " sur " + etapeAddress.get(i) + " -- OK");
 			}
+			System.out.println("YOLO route " + agent.getRoute().toString());
 			startAgent(agent, agentClass);
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
