@@ -34,7 +34,7 @@ public class Annuaire implements _Annuaire, _Service {
 	 * @return annuaire téléphonique
 	 * @throws RemoteException 
 	 */	
-	protected Annuaire(String path) throws RemoteException {	
+	protected Annuaire(String path) {	
 		
 		System.out.println(">Initialisation de l'annuaire...");
 		
@@ -67,7 +67,7 @@ public class Annuaire implements _Annuaire, _Service {
 	 * @return le numéro de télephone de l'abonné
 	 * @throws RemoteException 
 	 */
-	public Numero get(String abonne) throws RemoteException {
+	public Numero get(String abonne) {
 		return annuaire.get(abonne);
 	}
 

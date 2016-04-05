@@ -36,7 +36,7 @@ public class Chaine implements _Service {
 	 * @return la liste des hotels
 	 * @throws RemoteException 
 	 */	
-	protected Chaine(String path) throws RemoteException {	
+	protected Chaine(String path) {	
 		
 		System.out.println(">Initialisation de la chaine à partir du fichier "+ path + "...");
 		
@@ -70,7 +70,7 @@ public class Chaine implements _Service {
 	 * @return la liste des hotels trouvés
 	 * @throws RemoteException 
 	 */
-	public List<Hotel> get(String localisation) throws RemoteException {
+	public List<Hotel> get(String localisation){
 		// On parcourt la liste d'hotel et en ne retourne que les hotels ayant la bonne localisation
 		List<Hotel> result = new ArrayList<Hotel>();
         for (Hotel h : listhotels) {

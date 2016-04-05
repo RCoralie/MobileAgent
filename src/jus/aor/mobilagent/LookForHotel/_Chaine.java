@@ -4,8 +4,6 @@
 
 package jus.aor.mobilagent.LookForHotel;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.List;
 
 /**
@@ -21,5 +19,5 @@ public interface _Chaine{
 	 * @return la liste des hotels trouvés
 	 * @throws RemoteException 
 	 */
-	public abstract List<Hotel> get(String localisation) throws RemoteException ;
+	public abstract List<Hotel> get(String localisation);
 }

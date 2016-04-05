@@ -77,6 +77,7 @@ public final class Server implements _Server {
 			_Service<?> service = (_Service<?>) serviceClasse.getConstructor(Object[].class).newInstance(new Object[]{args});
 			// On ajoute le service dans l'agentServer (serveur qui accepte et traite les agents mobiles)
 			agentServer.addService(name, service);
+			serverClass.close();
 				
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
@@ -104,8 +105,6 @@ public final class Server implements _Server {
 			// On initialise l'agent sur ce serveur de départ
 			agent.init(agentClass, this.agentServer, this.name);
 			// Remplissage de la feuille de route de l'agent
-			etapeAction.add(etapeAction.size(), "retour");
-			etapeAddress.add(etapeAddress.size(), etapeAddress.get(0)); /*TODO : On ne part pas du premier server !!!*/
 			System.out.println("Nombre d'étapes " + etapeAddress.size());
 			for (int i=0; i<etapeAction.size(); i++){
 				// on récupère l'action de l'étape i

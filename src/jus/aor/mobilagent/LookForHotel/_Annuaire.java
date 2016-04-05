@@ -1,7 +1,5 @@
 package jus.aor.mobilagent.LookForHotel;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 
 /**
  * Définit un annuaire téléphonique élémentaire permettant, étant donnée un abonné, d'obtenir son numéro de téléphone.
@@ -15,5 +13,5 @@ public interface _Annuaire{
 	 * @return le numéro de télephone de l'abonné
 	 * @throws RemoteException 
 	 */
-	public Numero get(String abonne) throws RemoteException;
+	public Numero get(String abonne);
 }

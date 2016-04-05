@@ -4,7 +4,7 @@
 	<port value="1111"/>
 	<agent class="jus.aor.mobilagent.hello.Hello" codebase="jars/Hello.jar" args="">
 		<etape server="mobilagent://localhost:2222/" action="doIt" />
-		<etape server="mobilagent://localhost:3333/" action="doIt" />
+		<etape server="mobilagent://localhost:3333/" action="doIt" ></etape>
 		<etape server="mobilagent://localhost:2222/" action="doIt" />
 		<etape server="mobilagent://localhost:3333/" action="doIt" ></etape>
 	</agent>
