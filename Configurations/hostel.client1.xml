@@ -9,7 +9,7 @@
 	<agent class="jus.aor.mobilagent.hostel.LookForHotel" codebase="jars/Hostel.jar" args="Paris">
 		<etape server="mobilagent://localhost:2222/" action="findHotel" />
 		<etape server="mobilagent://localhost:3333/" action="findHotel" ></etape>
-		<etape server="mobilagent://localhost:4444/" action="findTelephone" />
+		<!--<etape server="mobilagent://localhost:4444/" action="findTelephone" />-->
 	</agent>
 <!--
 	<agent class="jus.aor.mobilagent.hello.Hello" codebase=".../Hello.jar" args="">

@@ -12,14 +12,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import jus.aor.mobilagent.kernel._Service;
+import jus.aor.mobilagent.LookForHotel.Numero;
+import jus.aor.mobilagent.LookForHotel._Annuaire;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import rmi.common.Numero;
-import rmi.common._Annuaire;
 
 
 public class Annuaire implements _Annuaire, _Service {

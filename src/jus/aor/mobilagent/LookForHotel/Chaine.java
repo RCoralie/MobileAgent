@@ -1,7 +1,7 @@
 package jus.aor.mobilagent.LookForHotel;
 
-import rmi.common.Hotel;
-import rmi.common._Chaine;
+import jus.aor.mobilagent.LookForHotel.Hotel;
+import jus.aor.mobilagent.LookForHotel._Chaine;
 
 import java.io.File;
 import java.io.IOException;

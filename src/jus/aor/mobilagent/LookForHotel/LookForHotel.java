@@ -4,10 +4,10 @@
 
 package jus.aor.mobilagent.LookForHotel;
 
-import rmi.common.Hotel;
-import rmi.common.Numero;
-import rmi.common._Annuaire;
-import rmi.common._Chaine;
+import jus.aor.mobilagent.LookForHotel.Hotel;
+import jus.aor.mobilagent.LookForHotel.Numero;
+import jus.aor.mobilagent.LookForHotel._Annuaire;
+import jus.aor.mobilagent.LookForHotel._Chaine;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
