@@ -42,9 +42,12 @@ public class Agent implements _Agent{
 		debut = System.currentTimeMillis();
 		// Construction d'une feuille de route pour l'agent
 		try {
-			route = new Route(new Etape(new URI(serverName),_Action.NIHIL));
-			System.out.println("YOLO ROUTE Agent : " + route.toString());
-		} catch (URISyntaxException e) {
+			//route = new Route(new Etape(new URI(serverName),_Action.NIHIL));
+			route = new Route(new Etape(new URI("mobilagent://localhost:1111/"),_Action.NIHIL));
+			//this.route.add(new Etape(new URI("mobilagent://localhost:1111/"),_Action.NIHIL));
+			System.out.println("YOLO ROUTE init : " + route.toString());
+		} //catch (URISyntaxException e) 
+		catch (Exception e){
 			e.printStackTrace();
 		}
 	}
@@ -73,15 +76,19 @@ public class Agent implements _Agent{
 	/** Methode appelée lorsqu'un agent arrive sur un serveur **/
 	public void run() {
 		System.out.println("L'agent est sur le serveur " + serverName + "\n");
-		// On supprime l'étape de la feuille de route
-		route.next();
-		// On execute l'action a effectuer sur le serveur courant 
-		route.get().action.execute();
-		// Si ce n'était pas la dernière étape
-		if(route.hasNext()){
-			// On passe sur le prochain serveur
-			this.move();
+		if (this.route.hasNext()){
+			Etape NextStep = this.route.next();
+			NextStep.action.execute();
+			
+			if(this.route.hasNext()){
+				this.move();
+			}else {
+				System.out.println("L'agent à fini.");
+			}
+		} else {
+			System.out.println("L'agent avait déjà fini.");
 		}
+		
 	}
 	
 	private void move(){
