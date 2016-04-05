@@ -1,141 +1,61 @@
-/**
- * J<i>ava</i> U<i>tilities</i> for S<i>tudents</i>
- */
-
 package jus.aor.mobilagent.LookForHotel;
 
-import jus.aor.mobilagent.LookForHotel.Hotel;
-import jus.aor.mobilagent.LookForHotel.Numero;
-import jus.aor.mobilagent.LookForHotel._Annuaire;
-import jus.aor.mobilagent.LookForHotel._Chaine;
-
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.logging.Level;
 
 import jus.aor.mobilagent.kernel.Agent;
+import jus.aor.mobilagent.kernel.Starter;
 import jus.aor.mobilagent.kernel._Action;
 import jus.aor.mobilagent.kernel._Service;
+import jus.aor.rmi.Common.Hotel;
+import jus.aor.rmi.Common.Numero;
 
-
-/** Représente un client effectuant une requête lui permettant d'obtenir les numéros de téléphone des hôtels répondant à son critère de choix.*/
-public class LookForHotel extends Agent{
+public class LookForHotel extends Agent {
 
 	private static final long serialVersionUID = 1L;
 
-	private int port = 1099;
-	private int nbChaines = 4;
-	
 	private String localisation;
-	private _Annuaire annuaire;
-	private List<_Chaine> listChaines = new ArrayList<_Chaine>();
-	private List<Hotel> listHotels = new ArrayList<Hotel>();
-	private HashMap<String, Numero> listNumeros = new HashMap<String, Numero>();
+	private Collection<Hotel> hotels = new LinkedList<Hotel>();
+	private Map<Hotel, Numero> numbers = new HashMap<Hotel, Numero>();
 
-	
-	
-	/**
-	 * Définition de l'objet représentant l'interrogation.
-	 * @param critère de localisation, nombre de chaines d'hotels
-	 */
-	public LookForHotel(String localisation){
-		
-		this.localisation = localisation;
-		
-		/* Mise en place d'un security manager : permet de charger dynamiquement certaines classes */
-		//if (System.getSecurityManager() == null) {
-		//	System.setSecurityManager(new SecurityManager());
-	    //}
-		
-		/* Recuperation des objets distants : Chaines & Annuaire */
-		
-		Registry registre;
-		
-		try {
-			// Recuperation des chaînes
-			for(int i=1; i<=nbChaines; i++){
-				registre = LocateRegistry.getRegistry(port+i);
-				listChaines.add((_Chaine) registre.lookup("chaine"+i));
+	protected _Action findHotels = new _Action() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void execute() {
+			//Starter.getLogger().log(Level.INFO, "Searching for hotels");
+			System.out.println("Searching for hotels");
+			_Service<?> _service = LookForHotel.this.server.getService("Hotels");
+			@SuppressWarnings("unchecked")
+			//Collection<Hotel> _hotel = (Collection<Hotel>) _service.call(new Object[] { LookForHotel.this.localisation });
+			Collection<Hotel> _hotel = (Collection<Hotel>) _service.call(localisation);
+			LookForHotel.this.hotels.addAll(_hotel);
+			//Starter.getLogger().log(Level.INFO, _hotel.size() + " hotels found in " + LookForHotel.this.localisation);
+		}
+	};
+
+	protected _Action findNumbers = new _Action() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void execute() {
+			//Starter.getLogger().log(Level.INFO, "Searching for hotels' number");
+			_Service<?> _service = LookForHotel.this.server.getService("Numbers");
+			for (Hotel h : LookForHotel.this.hotels) {
+				Numero num = (Numero) _service.call(new Object[] { h.name });
+				LookForHotel.this.numbers.put(h, num);
 			}
-		} catch (RemoteException | NotBoundException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			// Recuperation de l'annuaire
-			registre = LocateRegistry.getRegistry(port+(nbChaines+1));
-			annuaire = (_Annuaire) registre.lookup("annuaire");
-		} catch (RemoteException | NotBoundException e) {
-			e.printStackTrace();
-		}
-		
-	}
-		
-	
-	/**
-	 * Réalise une intérrogation
-	 * @return 
-	 * @return la durée de l'interrogation
-	 * @throws RemoteException
-	 */
-	public long call() {
-		// Initialisation du temps
-		long begin = System.currentTimeMillis();
-		// Calcul de la durée de traitement
-		long duration = System.currentTimeMillis() - begin;
-		return duration;
-	}
-	
-	
-	/**
-	 * Lance la requête et calcul son temps d'exécution
-	 * @param <localisation(optionnel)> <nombre de chaine d'hotels(optionnel)>
-	 */
-	public static void main(String[] args) {
-		
-		if(args.length != 1){
-			System.out.println("Arguments attendus : <localisation>");
-			System.exit(1);
-		}
-		LookForHotel lfh= new LookForHotel(args[0]);
-		
-		long duration = lfh.call();
-		System.out.println("La requête à été exécutée en " + duration +" ms.\n");
-	}
-	
-	
-	
-	
-	/** Service : Recherche des numéros dans l'annuaire
-	 * 
-	 */
-	protected _Action findTelephone = new _Action(){
-		private static final long serialVersionUID = 1L;
-		public void execute() {
-			System.out.println("Recherche dans l'annuaire...");
-			_Service<?> service = server.getService("Telephones");
-			listNumeros = (HashMap<String, Numero>) service.call(listHotels);
 		}
 	};
-	
-	/** Service : recherche des hotels correspondant à la localisation
-	 * 
-	 */
-	protected _Action findHotel = new _Action(){
-		private static final long serialVersionUID = 1L;
-		public void execute() {
-			System.out.println("Recherche des hotels...");
-			_Service<?> service = server.getService("Hotels");
-			listHotels = (List<Hotel>) service.call(localisation);
 
-		}
-		
-	};
-	
+	public LookForHotel(Object... args) {
+		this.localisation = (String) args[0];
+		this.hotels = new ArrayList<>();
+		this.numbers = new HashMap<>();
+	}
 
 }
